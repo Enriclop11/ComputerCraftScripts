@@ -5,17 +5,24 @@ function M.transferItems(chestOrigin, chestDestination)
     for i, item in pairs(items) do
         chestOrigin.pushItems(peripheral.getName(chestDestination), i)
     end
-    print("Items transferred")
 end
 
-function M.transferItemsFilter(chestOrigin, chestDestination, filter) 
+function M.transferItemsWhiteList(chestOrigin, chestDestination, whiteList) 
     local items = chestOrigin.list()
     for i, item in pairs(items) do
-        if(item.name == filter) then
+        if(whiteList[item.name]) then
             chestOrigin.pushItems(peripheral.getName(chestDestination), i)
         end
     end
-    print("Items transferred")
+end
+
+function M.transferItemsBlacklist(chestOrigin, chestDestination, blacklist) 
+    local items = chestOrigin.list()
+    for i, item in pairs(items) do
+        if(not blacklist[item.name]) then
+            chestOrigin.pushItems(peripheral.getName(chestDestination), i)
+        end
+    end
 end
 
 return M
